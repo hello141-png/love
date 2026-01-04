@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بۆ ئەڤینەکەم 🔥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a0e0e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 50px 30px;
+            box-shadow: 0 20px 60px rgba(255, 0, 50, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fire-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,69,0,0.1) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .flame-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: burn 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes burn {
+            from { transform: scale(1); filter: drop-shadow(0 0 5px #ff4500); }
+            to { transform: scale(1.1); filter: drop-shadow(0 0 20px #ff0000); }
+        }
+
+        .content-area {
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .message {
+            font-size: 24px;
+            line-height: 1.8;
+            color: #f8f9fa;
+            margin: 10px 0;
+            opacity: 0;
+            animation: fadeInBlur 1s forwards;
+            font-weight: 500;
+        }
+
+        .highlight-red {
+            font-size: 38px;
+            color: #ff2e63;
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInBlur {
+            from { opacity: 0; filter: blur(10px); transform: translateY(20px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1s; }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            z-index: 1;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+
+        .btn-next {
+            background: linear-gradient(45deg, #ff2e63, #8c0000);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 46, 99, 0.3);
+        }
+
+        .btn-next:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 46, 99, 0.5); }
+
+        .btn-prev {
+            background: rgba(255, 255, 255, 0.05);
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ff2e63;
+            width: 20%;
+            transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="fire-bg"></div>
+        <div class="flame-icon">🔥</div>
+
+        <div class="content-area" id="content">
+            </div>
+
+        <div class="btn-container">
+            <button class="btn btn-prev" id="prevBtn" onclick="prev()">پێشتر</button>
+            <button class="btn btn-next" id="nextBtn" onclick="next()">دواتر</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <script>
+        const scenes = [
+            {
+                html: `<div class="message">ئەڤینەکەم...</div>
+                       <div class="highlight-red">تۆ ئاگریت</div>
+                       <div class="message delay-1">هەموو گیانمت سووتاندووە</div>`
+            },
+            {
+                html: `<div class="message">زۆر بیرت دەکەم</div>
+                       <div class="message delay-1">تاسەی باوەشت و</div>
+                       <div class="message delay-2">گەرمی لێوەکانت کوشتوومی 🫦</div>`
+            },
+            {
+                html: `<div class="message">دەمەوێت جارێکی تر</div>
+                       <div class="message delay-1">لە نێوان قۆڵەکانمدا بتگوشم</div>
+                       <div class="message delay-2">و بە قووڵی ماچت بکەمەوە...</div>`
+            },
+            {
+                html: `<div class="message">هەموو جەستەم</div>
+                       <div class="message delay-1">تەنها داوای تۆ دەکات</div>
+                       <div class="message delay-2">تۆ لێدانی دڵ و حەزی منی 🔥</div>`
+            },
+            {
+                html: `<div class="highlight-red">ئەڤین</div>
+                       <div class="message">خۆت دەزانی چیت لێکردووم...</div>
+                       <div class="message delay-1">بۆت شێتم، تەنها بۆ تۆ 💋</div>`
+            }
+        ];
+
+        let current = 0;
+
+        function update() {
+            const content = document.getElementById('content');
+            content.style.opacity = 0;
+            
+            setTimeout(() => {
+                content.innerHTML = scenes[current].html;
+                content.style.opacity = 1;
+                
+                document.getElementById('progressFill').style.width = ((current + 1) / scenes.length * 100) + '%';
+                document.getElementById('prevBtn').style.visibility = current === 0 ? 'hidden' : 'visible';
+                document.getElementById('nextBtn').innerText = current === scenes.length - 1 ? 'دیسانەوە 🔥' : 'دواتر';
+            }, 300);
+        }
+
+        function next() {
+            if (current < scenes.length - 1) current++;
+            else current = 0;
+            update();
+        }
+
+        function prev() {
+            if (current > 0) current--;
+            update();
+        }
+
+        update();
+    </script>
+</body>
+</html>
